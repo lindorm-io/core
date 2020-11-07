@@ -1,5 +1,9 @@
 import { TFunction, TObject } from "../typing";
-import { camelCase, isArray, isObject, snakeCase } from "lodash";
+import { camelCase, isArray, isDate, isError, isObject, snakeCase } from "lodash";
+
+const isObjectStrict = (input: unknown): boolean => {
+  return isObject(input) && !isArray(input) && !isDate(input) && !isError(input);
+};
 
 const convertArrayValuesTo = (input: Array<string>, caseFunction: TFunction<string>): Array<string> => {
   if (!isArray(input)) return input;
@@ -14,12 +18,12 @@ const convertArrayValuesTo = (input: Array<string>, caseFunction: TFunction<stri
 };
 
 const convertObjectKeysTo = (input: TObject<any>, caseFunction: TFunction<string>): TObject<any> => {
-  if (!isObject(input) || isArray(input)) return input;
+  if (!isObjectStrict(input)) return input;
 
   const result: TObject<any> = {};
 
   for (const [key, value] of Object.entries(input)) {
-    if (isObject(value) && !isArray(value)) {
+    if (isObjectStrict(value)) {
       result[caseFunction(key)] = convertObjectKeysTo(value, caseFunction);
     } else {
       result[caseFunction(key)] = value;

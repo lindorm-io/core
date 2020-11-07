@@ -1,4 +1,4 @@
-import { pascalCase, camelArray, camelKeys, pascalArray, pascalKeys, snakeArray, snakeKeys } from "./case-switch";
+import { camelArray, camelKeys, pascalArray, pascalCase, pascalKeys, snakeArray, snakeKeys } from "./case-switch";
 
 describe("case-switch.ts", () => {
   describe("pascalCase", () => {
@@ -25,8 +25,19 @@ describe("case-switch.ts", () => {
 
   describe("camelKeys", () => {
     test("should only convert objects", () => {
+      const string = "string";
       // @ts-ignore
-      expect(camelKeys("string")).toBe("string");
+      expect(camelKeys(string)).toBe(string);
+
+      const error = new Error("error");
+      expect(camelKeys(error)).toStrictEqual(error);
+
+      const date = new Date();
+      expect(camelKeys(date)).toStrictEqual(date);
+
+      const array: Array<string> = ["array"];
+      // @ts-ignore
+      expect(camelKeys(array)).toStrictEqual(array);
     });
 
     test("should convert object keys to camelCase", () => {
