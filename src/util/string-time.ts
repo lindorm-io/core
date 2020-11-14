@@ -58,16 +58,20 @@ export const stringToDurationObject = (string: string): TDurationObject => {
   return object;
 };
 
-export const stringToMilliseconds = (string: string): number => {
+export const stringToSeconds = (string: string): number => {
   const object = stringToDurationObject(string);
   let time = 0;
 
-  time = time + object.seconds * 1000;
-  time = time + object.minutes * 60 * 1000;
-  time = time + object.hours * 60 * 60 * 1000;
-  time = time + object.days * 24 * 60 * 60 * 1000;
-  time = time + object.months * 30 * 24 * 60 * 60 * 1000;
-  time = time + object.years * 365 * 24 * 60 * 60 * 1000;
+  time = time + object.seconds;
+  time = time + object.minutes * 60;
+  time = time + object.hours * 60 * 60;
+  time = time + object.days * 24 * 60 * 60;
+  time = time + object.months * 30 * 24 * 60 * 60;
+  time = time + object.years * 365 * 24 * 60 * 60;
 
   return time;
+};
+
+export const stringToMilliseconds = (string: string): number => {
+  return stringToSeconds(string) * 1000;
 };
