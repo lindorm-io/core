@@ -28,4 +28,8 @@ describe("ExtendableError.ts", () => {
   test("should accept errorCode", () => {
     expect(new ExtendedError({ errorCode: "errorCode" }).errorCode).toBe("errorCode");
   });
+
+  test("should accept publicData", () => {
+    expect(new ExtendedError({ publicData: { num: 400 } }).publicData).toStrictEqual({ num: 400 });
+  });
 });
