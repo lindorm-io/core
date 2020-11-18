@@ -64,7 +64,7 @@ export abstract class EntityBase implements IEntity {
     this._version = version;
   }
 
-  protected abstract create(): void;
+  public abstract create(): void;
 
   protected addEvent(name: string, payload: TObject<any>): void {
     this._events.push({
