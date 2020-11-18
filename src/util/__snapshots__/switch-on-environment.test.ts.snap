@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`switchConfiguration should return DEVELOPMENT object 1`] = `
+Object {
+  "development": true,
+}
+`;
+
+exports[`switchConfiguration should return PRODUCTION object 1`] = `
+Object {
+  "production": true,
+}
+`;
+
+exports[`switchConfiguration should return STAGING object 1`] = `
+Object {
+  "staging": true,
+}
+`;
+
+exports[`switchConfiguration should return TEST object 1`] = `
+Object {
+  "test": true,
+}
+`;

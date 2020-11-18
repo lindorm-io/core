@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mergeObjectsWithBias should prioritize primary input 1`] = `
+Object {
+  "a": "primary",
+  "b": "secondary",
+  "c": "primary",
+  "d": null,
+  "e": 12345,
+}
+`;

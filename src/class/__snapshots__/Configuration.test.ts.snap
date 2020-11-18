@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Configuration should provide configuration for development 1`] = `
+Object {
+  "HOST": "https://dev.lindorm.io/",
+  "NODE_ENVIRONMENT": "development",
+  "PRIO": "recognized",
+  "SERVER_PORT": 1234,
+}
+`;
+
+exports[`Configuration should provide configuration for production 1`] = `
+Object {
+  "HOST": "https://lindorm.io/",
+  "NODE_ENVIRONMENT": "production",
+  "PRIO": "recognized",
+  "SERVER_PORT": 2345,
+}
+`;
+
+exports[`Configuration should provide configuration for staging 1`] = `
+Object {
+  "HOST": "https://staging.lindorm.io/",
+  "NODE_ENVIRONMENT": "staging",
+  "PRIO": "recognized",
+  "SERVER_PORT": 3456,
+}
+`;
+
+exports[`Configuration should provide configuration for test 1`] = `
+Object {
+  "HOST": "https://test.lindorm.io/",
+  "NODE_ENVIRONMENT": "test",
+  "PRIO": "recognized",
+  "SERVER_PORT": 4567,
+}
+`;
