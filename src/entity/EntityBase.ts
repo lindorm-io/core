@@ -1,20 +1,21 @@
-import { TObject } from "../typing";
+import { TFunction, TObject } from "../typing";
 import { v4 as uuid } from "uuid";
 
 export interface IEntity {
   id: string;
-  version: number;
   created: Date;
   updated: Date;
   events?: Array<IEntityEvent>;
+  version: number;
+  create?: TFunction<void>;
 }
 
 export interface IEntityBaseOptions {
   id?: string;
-  version?: number;
   created?: Date;
   updated?: Date;
   events?: Array<IEntityEvent>;
+  version?: number;
 }
 
 export interface IEntityEvent {
