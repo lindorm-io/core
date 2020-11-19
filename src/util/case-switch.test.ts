@@ -15,11 +15,7 @@ describe("case-switch.ts", () => {
     });
 
     test("should convert object keys to camelCase", () => {
-      expect(camelArray(["camelCase", "snake_case", "PascalCase"])).toStrictEqual([
-        "camelCase",
-        "snakeCase",
-        "pascalCase",
-      ]);
+      expect(camelArray(["camelCase", "snake_case", "PascalCase"])).toMatchSnapshot();
     });
   });
 
@@ -48,12 +44,7 @@ describe("case-switch.ts", () => {
           snake_three: true,
           camelOne: ["mock"],
         }),
-      ).toStrictEqual({
-        snakeOne: "one",
-        snakeTwo: 2,
-        snakeThree: true,
-        camelOne: ["mock"],
-      });
+      ).toMatchSnapshot();
     });
 
     test("should convert objects within objects to camelCase", () => {
@@ -69,27 +60,13 @@ describe("case-switch.ts", () => {
             },
           },
         }),
-      ).toStrictEqual({
-        snakeOne: "one",
-        snakeTwo: {
-          objectOne: 1,
-          objectTwo: "two",
-          nestedObject: {
-            nestedOne: "one",
-            nestedTwo: ["array"],
-          },
-        },
-      });
+      ).toMatchSnapshot();
     });
   });
 
   describe("snakeArray", () => {
     test("should convert object keys to snake_case", () => {
-      expect(snakeArray(["camelCase", "snake_case", "PascalCase"])).toStrictEqual([
-        "camel_case",
-        "snake_case",
-        "pascal_case",
-      ]);
+      expect(snakeArray(["camelCase", "snake_case", "PascalCase"])).toMatchSnapshot();
     });
   });
 
@@ -101,21 +78,13 @@ describe("case-switch.ts", () => {
           camelTwo: 2,
           snake_one: "mock",
         }),
-      ).toStrictEqual({
-        camel_one: "one",
-        camel_two: 2,
-        snake_one: "mock",
-      });
+      ).toMatchSnapshot();
     });
   });
 
   describe("pascalArray", () => {
     test("should convert object keys to PascalCase", () => {
-      expect(pascalArray(["camelCase", "snake_case", "PascalCase"])).toStrictEqual([
-        "CamelCase",
-        "SnakeCase",
-        "PascalCase",
-      ]);
+      expect(pascalArray(["camelCase", "snake_case", "PascalCase"])).toMatchSnapshot();
     });
   });
 
@@ -126,10 +95,7 @@ describe("case-switch.ts", () => {
           camelOne: "one",
           snake_one: "one",
         }),
-      ).toStrictEqual({
-        CamelOne: "one",
-        SnakeOne: "one",
-      });
+      ).toMatchSnapshot();
     });
   });
 });

@@ -27,25 +27,11 @@ describe("string-time.ts", () => {
     });
 
     test("should return a full object", () => {
-      expect(stringToDurationObject("1 years 2 months 3 days 4 hours 5 minutes 6 seconds")).toStrictEqual({
-        years: 1,
-        months: 2,
-        days: 3,
-        hours: 4,
-        minutes: 5,
-        seconds: 6,
-      });
+      expect(stringToDurationObject("1 years 2 months 3 days 4 hours 5 minutes 6 seconds")).toMatchSnapshot();
     });
 
     test("should return 0 on wrong or missing input", () => {
-      expect(stringToDurationObject("100 milliseconds")).toStrictEqual({
-        years: 0,
-        months: 0,
-        days: 0,
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-      });
+      expect(stringToDurationObject("100 milliseconds")).toMatchSnapshot();
     });
   });
 
