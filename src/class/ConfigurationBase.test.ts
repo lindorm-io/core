@@ -1,5 +1,5 @@
 import { NodeEnvironment } from "../enum";
-import { Configuration, IConfigurationBase, IConfigurationOptions } from "./Configuration";
+import { ConfigurationBase, IConfigurationBase, IConfigurationOptions } from "./ConfigurationBase";
 
 interface IMockConfiguration extends IConfigurationBase {
   SERVER_PORT: number;
@@ -7,8 +7,8 @@ interface IMockConfiguration extends IConfigurationBase {
   PRIO: string;
 }
 
-class MockConfig extends Configuration<IMockConfiguration> {
-  constructor(options: IConfigurationOptions) {
+class MockConfig extends ConfigurationBase<IMockConfiguration> {
+  constructor(options: IConfigurationOptions<IMockConfiguration>) {
     super(options);
   }
 }
@@ -54,11 +54,11 @@ describe("Configuration", () => {
       PRIO: "ignored",
     };
     config = new MockConfig({
-      environment: environmentConfig,
-      production: productionConfig,
-      staging: stagingConfig,
-      development: developmentConfig,
-      test: testConfig,
+      environmentConfig,
+      productionConfig,
+      stagingConfig,
+      developmentConfig,
+      testConfig,
     });
   });
 
