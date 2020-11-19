@@ -1,28 +1,28 @@
 import { mergeObjectsWithBias } from "../util/merge-with-bias";
 import { switchOnEnvironment } from "../util/switch-on-environment";
 
-export interface IConfigurationBase {
+export interface IConfigurationDataBase {
   NODE_ENVIRONMENT: string;
 }
 
-export interface IConfigurationOptions<Interface extends IConfigurationBase> {
-  productionConfig: Interface;
-  stagingConfig: Interface;
-  developmentConfig: Interface;
+export interface IConfigurationOptions<IConfigurationData extends IConfigurationDataBase> {
+  productionConfig: IConfigurationData;
+  stagingConfig: IConfigurationData;
+  developmentConfig: IConfigurationData;
 
-  environmentConfig: Interface;
-  testConfig: Interface;
+  environmentConfig: IConfigurationData;
+  testConfig: IConfigurationData;
 }
 
-export abstract class ConfigurationBase<Interface extends IConfigurationBase> {
-  private productionConfig: IConfigurationBase;
-  private stagingConfig: IConfigurationBase;
-  private developmentConfig: IConfigurationBase;
+export abstract class ConfigurationBase<IConfigurationData extends IConfigurationDataBase> {
+  private productionConfig: IConfigurationDataBase;
+  private stagingConfig: IConfigurationDataBase;
+  private developmentConfig: IConfigurationDataBase;
 
-  private environmentConfig: IConfigurationBase;
-  private testConfig: IConfigurationBase;
+  private environmentConfig: IConfigurationDataBase;
+  private testConfig: IConfigurationDataBase;
 
-  protected constructor(options: IConfigurationOptions<Interface>) {
+  protected constructor(options: IConfigurationOptions<IConfigurationData>) {
     this.productionConfig = options.productionConfig;
     this.stagingConfig = options.stagingConfig;
     this.developmentConfig = options.developmentConfig;
@@ -31,7 +31,7 @@ export abstract class ConfigurationBase<Interface extends IConfigurationBase> {
     this.testConfig = options.testConfig;
   }
 
-  public get(environment: string): Interface {
+  public get(environment: string): IConfigurationData {
     const data: unknown = mergeObjectsWithBias(
       this.environmentConfig,
       switchOnEnvironment(environment, {
@@ -41,6 +41,6 @@ export abstract class ConfigurationBase<Interface extends IConfigurationBase> {
         test: this.testConfig,
       }),
     );
-    return data as Interface;
+    return data as IConfigurationData;
   }
 }

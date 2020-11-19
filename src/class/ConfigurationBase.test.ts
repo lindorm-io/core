@@ -1,7 +1,7 @@
 import { NodeEnvironment } from "../enum";
-import { ConfigurationBase, IConfigurationBase, IConfigurationOptions } from "./ConfigurationBase";
+import { ConfigurationBase, IConfigurationDataBase, IConfigurationOptions } from "./ConfigurationBase";
 
-interface IMockConfiguration extends IConfigurationBase {
+interface IMockConfiguration extends IConfigurationDataBase {
   SERVER_PORT: number;
   HOST: string;
   PRIO: string;
