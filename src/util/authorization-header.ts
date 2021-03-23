@@ -1,26 +1,19 @@
-import { APIError } from "../error";
-import { HttpStatus } from "../constant";
-
-export interface IGetAuthorizationHeaderData {
-  type: string;
-  value: string;
-}
+import { IGetAuthorizationHeaderData } from "../typing";
+import {
+  InvalidAuthorizationHeaderLengthError,
+  InvalidAuthorizationHeaderTypeError,
+  MissingAuthorizationHeaderError,
+} from "../error";
 
 export const getAuthorizationHeader = (header: string): IGetAuthorizationHeaderData => {
   if (!header) {
-    throw new APIError("Missing Authorization Header", {
-      statusCode: HttpStatus.ClientError.BAD_REQUEST,
-    });
+    throw new MissingAuthorizationHeaderError();
   }
 
   const split = header.split(" ");
 
   if (split.length !== 2) {
-    throw new APIError("Invalid Authorization Header length", {
-      debug: { header },
-      details: "The Authorization header should include two strings",
-      statusCode: HttpStatus.ClientError.BAD_REQUEST,
-    });
+    throw new InvalidAuthorizationHeaderLengthError(header);
   }
 
   const type = split[0];
@@ -32,10 +25,7 @@ export const getAuthorizationHeader = (header: string): IGetAuthorizationHeaderD
       break;
 
     default:
-      throw new APIError("Invalid Authorization Header type", {
-        debug: { type },
-        statusCode: HttpStatus.ClientError.BAD_REQUEST,
-      });
+      throw new InvalidAuthorizationHeaderTypeError(type);
   }
 
   return { type, value };

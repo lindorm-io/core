@@ -1,4 +1,9 @@
 import { getAuthorizationHeader } from "./authorization-header";
+import {
+  InvalidAuthorizationHeaderLengthError,
+  InvalidAuthorizationHeaderTypeError,
+  MissingAuthorizationHeaderError,
+} from "../error";
 
 describe("authorization-header.ts", () => {
   test("should return an object with Basic type and value", () => {
@@ -16,26 +21,18 @@ describe("authorization-header.ts", () => {
   });
 
   test("should throw an error when header is unavailable", () => {
-    expect(() => getAuthorizationHeader(null)).toThrow(
-      expect.objectContaining({ message: "Missing Authorization Header" }),
-    );
+    expect(() => getAuthorizationHeader(null)).toThrow(expect.any(MissingAuthorizationHeaderError));
   });
 
   test("should throw an error when header is too short", () => {
-    expect(() => getAuthorizationHeader("one")).toThrow(
-      expect.objectContaining({ message: "Invalid Authorization Header length" }),
-    );
+    expect(() => getAuthorizationHeader("one")).toThrow(expect.any(InvalidAuthorizationHeaderLengthError));
   });
 
   test("should throw an error when header is too long", () => {
-    expect(() => getAuthorizationHeader("one two three")).toThrow(
-      expect.objectContaining({ message: "Invalid Authorization Header length" }),
-    );
+    expect(() => getAuthorizationHeader("one two three")).toThrow(expect.any(InvalidAuthorizationHeaderLengthError));
   });
 
   test("should throw an error when header type is unexpected", () => {
-    expect(() => getAuthorizationHeader("one two")).toThrow(
-      expect.objectContaining({ message: "Invalid Authorization Header type" }),
-    );
+    expect(() => getAuthorizationHeader("one two")).toThrow(expect.any(InvalidAuthorizationHeaderTypeError));
   });
 });

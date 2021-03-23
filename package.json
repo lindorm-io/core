@@ -36,6 +36,7 @@
     "validate": "npm run test:clear && npm run lint && npm run typecheck && npm run test"
   },
   "dependencies": {
+    "@lindorm-io/errors": "0.0.1",
     "lodash": "^4.17.21",
     "random-number-csprng": "^1.0.2",
     "uuid": "^8.3.2"
