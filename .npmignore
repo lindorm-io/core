@@ -1,7 +1,7 @@
 /.idea
 /.vscode
-/data
 /coverage
+/data
 /node_modules
 /src
 /tmp
