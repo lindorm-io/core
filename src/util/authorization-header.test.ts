@@ -21,6 +21,7 @@ describe("authorization-header.ts", () => {
   });
 
   test("should throw an error when header is unavailable", () => {
+    // @ts-ignore
     expect(() => getAuthorizationHeader(null)).toThrow(expect.any(MissingAuthorizationHeaderError));
   });
 
