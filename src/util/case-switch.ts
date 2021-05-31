@@ -1,10 +1,7 @@
-import { camelCase, isArray, isDate, isError, isObject, snakeCase } from "lodash";
+import { camelCase, isArray, snakeCase } from "lodash";
+import { isObject } from "./is-object";
 
 type TCaseFunction = (arg: string) => string;
-
-const isObjectStrict = (input: unknown): boolean => {
-  return isObject(input) && !isArray(input) && !isDate(input) && !isError(input);
-};
 
 const convertArrayValuesTo = (input: Array<string>, caseFunction: TCaseFunction): Array<string> => {
   if (!isArray(input)) return input;
@@ -18,20 +15,20 @@ const convertArrayValuesTo = (input: Array<string>, caseFunction: TCaseFunction)
   return result;
 };
 
-const convertObjectKeysTo = (input: Record<string, any>, caseFunction: TCaseFunction): Record<string, any> => {
-  if (!isObjectStrict(input)) return input;
+const convertObjectKeysTo = <Output>(input: Record<string, any>, caseFunction: TCaseFunction): Output => {
+  if (!isObject(input)) return input as Output;
 
   const result: Record<string, any> = {};
 
   for (const [key, value] of Object.entries(input)) {
-    if (isObjectStrict(value)) {
+    if (isObject(value)) {
       result[caseFunction(key)] = convertObjectKeysTo(value, caseFunction);
     } else {
       result[caseFunction(key)] = value;
     }
   }
 
-  return result;
+  return result as Output;
 };
 
 export const pascalCase = (string: string): string => {
@@ -43,22 +40,22 @@ export const camelArray = (input: Array<string>): Array<string> => {
   return convertArrayValuesTo(input, camelCase);
 };
 
-export const camelKeys = (input: Record<string, any>): Record<string, any> => {
-  return convertObjectKeysTo(input, camelCase);
+export const camelKeys = <Output>(input: Record<string, any>): Output => {
+  return convertObjectKeysTo<Output>(input, camelCase);
 };
 
 export const snakeArray = (input: Array<string>): Array<string> => {
   return convertArrayValuesTo(input, snakeCase);
 };
 
-export const snakeKeys = (input: Record<string, any>): Record<string, any> => {
-  return convertObjectKeysTo(input, snakeCase);
+export const snakeKeys = <Output>(input: Record<string, any>): Output => {
+  return convertObjectKeysTo<Output>(input, snakeCase);
 };
 
 export const pascalArray = (input: Array<string>): Array<string> => {
   return convertArrayValuesTo(input, pascalCase);
 };
 
-export const pascalKeys = (input: Record<string, any>): Record<string, any> => {
-  return convertObjectKeysTo(input, pascalCase);
+export const pascalKeys = <Output>(input: Record<string, any>): Output => {
+  return convertObjectKeysTo<Output>(input, pascalCase);
 };
