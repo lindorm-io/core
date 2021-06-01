@@ -1,24 +1,32 @@
 import { isFinite } from "lodash";
-import { DurationKey } from "../enum";
 
-export type TDurationObject = {
-  [DurationKey.YEARS]: number;
-  [DurationKey.MONTHS]: number;
-  [DurationKey.DAYS]: number;
-  [DurationKey.HOURS]: number;
-  [DurationKey.MINUTES]: number;
-  [DurationKey.SECONDS]: number;
+enum Duration {
+  YEARS = "years",
+  MONTHS = "months",
+  DAYS = "days",
+  HOURS = "hours",
+  MINUTES = "minutes",
+  SECONDS = "seconds",
+}
+
+type TDurationObject = {
+  [Duration.YEARS]: number;
+  [Duration.MONTHS]: number;
+  [Duration.DAYS]: number;
+  [Duration.HOURS]: number;
+  [Duration.MINUTES]: number;
+  [Duration.SECONDS]: number;
 };
 
-type TRegExpObject = Record<DurationKey, RegExp>;
+type RegExpObject = Record<Duration, RegExp>;
 
-const regex: TRegExpObject = {
-  [DurationKey.YEARS]: /(\d+ years)/g,
-  [DurationKey.MONTHS]: /(\d+ months)/g,
-  [DurationKey.DAYS]: /(\d+ days)/g,
-  [DurationKey.HOURS]: /(\d+ hours)/g,
-  [DurationKey.MINUTES]: /(\d+ minutes)/g,
-  [DurationKey.SECONDS]: /(\d+ seconds)/g,
+const regexp: RegExpObject = {
+  [Duration.YEARS]: /(\d+ years)/g,
+  [Duration.MONTHS]: /(\d+ months)/g,
+  [Duration.DAYS]: /(\d+ days)/g,
+  [Duration.HOURS]: /(\d+ hours)/g,
+  [Duration.MINUTES]: /(\d+ minutes)/g,
+  [Duration.SECONDS]: /(\d+ seconds)/g,
 };
 
 const getNumber = (string: string, regex: RegExp): number => {
@@ -42,17 +50,17 @@ const getNumber = (string: string, regex: RegExp): number => {
 };
 
 export const stringToDurationObject = (string: string): TDurationObject => {
-  const object: Record<DurationKey, number> = {
-    [DurationKey.YEARS]: 0,
-    [DurationKey.MONTHS]: 0,
-    [DurationKey.DAYS]: 0,
-    [DurationKey.HOURS]: 0,
-    [DurationKey.MINUTES]: 0,
-    [DurationKey.SECONDS]: 0,
+  const object: Record<Duration, number> = {
+    [Duration.YEARS]: 0,
+    [Duration.MONTHS]: 0,
+    [Duration.DAYS]: 0,
+    [Duration.HOURS]: 0,
+    [Duration.MINUTES]: 0,
+    [Duration.SECONDS]: 0,
   };
 
-  for (const key of Object.keys(regex)) {
-    object[key as DurationKey] = getNumber(string, regex[key as DurationKey]);
+  for (const key of Object.keys(regexp)) {
+    object[key as Duration] = getNumber(string, regexp[key as Duration]);
   }
 
   return object;
@@ -62,12 +70,12 @@ export const stringToSeconds = (string: string): number => {
   const object = stringToDurationObject(string);
   let time = 0;
 
-  time = time + object.seconds;
-  time = time + object.minutes * 60;
-  time = time + object.hours * 60 * 60;
-  time = time + object.days * 24 * 60 * 60;
-  time = time + object.months * 30 * 24 * 60 * 60;
-  time = time + object.years * 365 * 24 * 60 * 60;
+  time = time + object[Duration.SECONDS];
+  time = time + object[Duration.MINUTES] * 60;
+  time = time + object[Duration.HOURS] * 60 * 60;
+  time = time + object[Duration.DAYS] * 24 * 60 * 60;
+  time = time + object[Duration.MONTHS] * 30 * 24 * 60 * 60;
+  time = time + object[Duration.YEARS] * 365 * 24 * 60 * 60;
 
   return time;
 };
