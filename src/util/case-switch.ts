@@ -1,30 +1,38 @@
-import { camelCase, isArray, snakeCase } from "lodash";
-import { isObject } from "./is-object";
+import { camelCase, snakeCase } from "lodash";
+import { isArrayStrict, isObjectStrict } from "./strict-type";
 
-type TCaseFunction = (arg: string) => string;
+export type AnyObject = Record<string, any>;
+export type Callback = (arg: string) => string;
 
-const convertArrayValuesTo = (input: Array<string>, caseFunction: TCaseFunction): Array<string> => {
-  if (!isArray(input)) return input;
+const convertArrayValuesTo = (input: Array<string>, callback: Callback): Array<string> => {
+  if (!isArrayStrict(input)) {
+    throw new Error(`Invalid input [ ${typeof input} ]`);
+  }
 
   const result: Array<string> = [];
 
   for (const value of input) {
-    result.push(caseFunction(value));
+    result.push(callback(value));
   }
 
   return result;
 };
 
-const convertObjectKeysTo = <Output>(input: Record<string, any>, caseFunction: TCaseFunction): Output => {
-  if (!isObject(input)) return input as Output;
+const convertObjectKeysTo = <Input extends AnyObject, Output extends AnyObject>(
+  input: Input,
+  callback: Callback,
+): Output => {
+  if (!isObjectStrict(input)) {
+    throw new Error(`Invalid input [ ${typeof input} ]`);
+  }
 
   const result: Record<string, any> = {};
 
   for (const [key, value] of Object.entries(input)) {
-    if (isObject(value)) {
-      result[caseFunction(key)] = convertObjectKeysTo(value, caseFunction);
+    if (isObjectStrict(value)) {
+      result[callback(key)] = convertObjectKeysTo(value, callback);
     } else {
-      result[caseFunction(key)] = value;
+      result[callback(key)] = value;
     }
   }
 
@@ -40,22 +48,22 @@ export const camelArray = (input: Array<string>): Array<string> => {
   return convertArrayValuesTo(input, camelCase);
 };
 
-export const camelKeys = <Output>(input: Record<string, any>): Output => {
-  return convertObjectKeysTo<Output>(input, camelCase);
+export const camelKeys = <Input extends AnyObject, Output extends AnyObject>(input: Input): Output => {
+  return convertObjectKeysTo<Input, Output>(input, camelCase);
 };
 
 export const snakeArray = (input: Array<string>): Array<string> => {
   return convertArrayValuesTo(input, snakeCase);
 };
 
-export const snakeKeys = <Output>(input: Record<string, any>): Output => {
-  return convertObjectKeysTo<Output>(input, snakeCase);
+export const snakeKeys = <Input extends AnyObject, Output extends AnyObject>(input: Input): Output => {
+  return convertObjectKeysTo<Input, Output>(input, snakeCase);
 };
 
 export const pascalArray = (input: Array<string>): Array<string> => {
   return convertArrayValuesTo(input, pascalCase);
 };
 
-export const pascalKeys = <Output>(input: Record<string, any>): Output => {
-  return convertObjectKeysTo<Output>(input, pascalCase);
+export const pascalKeys = <Input extends AnyObject, Output extends AnyObject>(input: Input): Output => {
+  return convertObjectKeysTo<Input, Output>(input, pascalCase);
 };
