@@ -1,4 +1,3 @@
-export * from "./authorization-header";
 export * from "./base64";
 export * from "./case-switch";
 export * from "./is-object";
