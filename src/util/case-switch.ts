@@ -1,8 +1,8 @@
 import { camelCase, snakeCase } from "lodash";
 import { isArrayStrict, isObjectStrict } from "./strict-type";
 
-export type AnyObject = Record<string, any>;
-export type Callback = (arg: string) => string;
+type AnyObject = Record<string, any>;
+type Callback = (arg: string) => string;
 
 const convertArrayValuesTo = (input: Array<string>, callback: Callback): Array<string> => {
   if (!isArrayStrict(input)) {

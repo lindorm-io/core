@@ -45,7 +45,6 @@
     "random-number-csprng": "^1.0.2",
     "uuid": "^8.3.2"
   },
-  "peerDependencies": {},
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "@types/lodash": "^4.14.170",
