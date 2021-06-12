@@ -7,15 +7,17 @@ enum Duration {
   HOURS = "hours",
   MINUTES = "minutes",
   SECONDS = "seconds",
+  MILLISECONDS = "milliseconds",
 }
 
-type TDurationObject = {
+type DurationObject = {
   [Duration.YEARS]: number;
   [Duration.MONTHS]: number;
   [Duration.DAYS]: number;
   [Duration.HOURS]: number;
   [Duration.MINUTES]: number;
   [Duration.SECONDS]: number;
+  [Duration.MILLISECONDS]: number;
 };
 
 type RegExpObject = Record<Duration, RegExp>;
@@ -27,6 +29,7 @@ const regexp: RegExpObject = {
   [Duration.HOURS]: /(\d+ hours)/g,
   [Duration.MINUTES]: /(\d+ minutes)/g,
   [Duration.SECONDS]: /(\d+ seconds)/g,
+  [Duration.MILLISECONDS]: /(\d+ milliseconds)/g,
 };
 
 const getNumber = (string: string, regex: RegExp): number => {
@@ -49,7 +52,7 @@ const getNumber = (string: string, regex: RegExp): number => {
   }
 };
 
-export const stringToDurationObject = (string: string): TDurationObject => {
+export const stringToDurationObject = (string: string): DurationObject => {
   const object: Record<Duration, number> = {
     [Duration.YEARS]: 0,
     [Duration.MONTHS]: 0,
@@ -57,6 +60,7 @@ export const stringToDurationObject = (string: string): TDurationObject => {
     [Duration.HOURS]: 0,
     [Duration.MINUTES]: 0,
     [Duration.SECONDS]: 0,
+    [Duration.MILLISECONDS]: 0,
   };
 
   for (const key of Object.keys(regexp)) {
@@ -66,20 +70,21 @@ export const stringToDurationObject = (string: string): TDurationObject => {
   return object;
 };
 
-export const stringToSeconds = (string: string): number => {
+export const stringToMilliseconds = (string: string): number => {
   const object = stringToDurationObject(string);
   let time = 0;
 
-  time = time + object[Duration.SECONDS];
-  time = time + object[Duration.MINUTES] * 60;
-  time = time + object[Duration.HOURS] * 60 * 60;
-  time = time + object[Duration.DAYS] * 24 * 60 * 60;
-  time = time + object[Duration.MONTHS] * 30 * 24 * 60 * 60;
-  time = time + object[Duration.YEARS] * 365 * 24 * 60 * 60;
+  time = time + object[Duration.MILLISECONDS];
+  time = time + object[Duration.SECONDS] * 1000;
+  time = time + object[Duration.MINUTES] * 60 * 1000;
+  time = time + object[Duration.HOURS] * 60 * 60 * 1000;
+  time = time + object[Duration.DAYS] * 24 * 60 * 60 * 1000;
+  time = time + object[Duration.MONTHS] * 30 * 24 * 60 * 60 * 1000;
+  time = time + object[Duration.YEARS] * 365 * 24 * 60 * 60 * 1000;
 
   return time;
 };
 
-export const stringToMilliseconds = (string: string): number => {
-  return stringToSeconds(string) * 1000;
+export const stringToSeconds = (string: string): number => {
+  return Math.round(stringToMilliseconds(string) / 1000);
 };

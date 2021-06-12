@@ -26,12 +26,34 @@ describe("string-time.ts", () => {
       expect(stringToDurationObject("15 seconds").seconds).toBe(15);
     });
 
+    test("should return milliseconds", () => {
+      expect(stringToDurationObject("180 milliseconds").milliseconds).toBe(180);
+    });
+
     test("should return a full object", () => {
-      expect(stringToDurationObject("1 years 2 months 3 days 4 hours 5 minutes 6 seconds")).toMatchSnapshot();
+      expect(
+        stringToDurationObject("1 years 2 months 3 days 4 hours 5 minutes 6 seconds 7 milliseconds"),
+      ).toStrictEqual({
+        days: 3,
+        hours: 4,
+        milliseconds: 7,
+        minutes: 5,
+        months: 2,
+        seconds: 6,
+        years: 1,
+      });
     });
 
     test("should return 0 on wrong or missing input", () => {
-      expect(stringToDurationObject("100 milliseconds")).toMatchSnapshot();
+      expect(stringToDurationObject("100 wrong")).toStrictEqual({
+        days: 0,
+        hours: 0,
+        milliseconds: 0,
+        minutes: 0,
+        months: 0,
+        seconds: 0,
+        years: 0,
+      });
     });
   });
 
@@ -60,8 +82,16 @@ describe("string-time.ts", () => {
       expect(stringToSeconds("6 seconds")).toBe(6);
     });
 
+    test("should round milliseconds down with Math", () => {
+      expect(stringToSeconds("499 milliseconds")).toBe(0);
+    });
+
+    test("should round milliseconds up with Math", () => {
+      expect(stringToSeconds("500 milliseconds")).toBe(1);
+    });
+
     test("should return a combined number", () => {
-      expect(stringToSeconds("1 years 2 months 3 days 4 hours 5 minutes 6 seconds")).toBe(36993906);
+      expect(stringToSeconds("1 years 2 months 3 days 4 hours 5 minutes 6 seconds 7 milliseconds")).toBe(36993906);
     });
   });
 
@@ -90,8 +120,14 @@ describe("string-time.ts", () => {
       expect(stringToMilliseconds("6 seconds")).toBe(6000);
     });
 
+    test("should return milliseconds", () => {
+      expect(stringToMilliseconds("70 milliseconds")).toBe(70);
+    });
+
     test("should return a combined number", () => {
-      expect(stringToMilliseconds("1 years 2 months 3 days 4 hours 5 minutes 6 seconds")).toBe(36993906000);
+      expect(stringToMilliseconds("1 years 2 months 3 days 4 hours 5 minutes 6 seconds 7 milliseconds")).toBe(
+        36993906007,
+      );
     });
   });
 });
