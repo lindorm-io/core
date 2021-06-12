@@ -39,10 +39,7 @@ const convertObjectKeysTo = <Input extends AnyObject, Output extends AnyObject>(
   return result as Output;
 };
 
-export const pascalCase = (string: string): string => {
-  const [first, ...rest] = camelCase(string);
-  return first.toUpperCase().concat(...rest);
-};
+export { camelCase };
 
 export const camelArray = (input: Array<string>): Array<string> => {
   return convertArrayValuesTo(input, camelCase);
@@ -52,12 +49,9 @@ export const camelKeys = <Input extends AnyObject, Output extends AnyObject>(inp
   return convertObjectKeysTo<Input, Output>(input, camelCase);
 };
 
-export const snakeArray = (input: Array<string>): Array<string> => {
-  return convertArrayValuesTo(input, snakeCase);
-};
-
-export const snakeKeys = <Input extends AnyObject, Output extends AnyObject>(input: Input): Output => {
-  return convertObjectKeysTo<Input, Output>(input, snakeCase);
+export const pascalCase = (string: string): string => {
+  const [first, ...rest] = camelCase(string);
+  return first.toUpperCase().concat(...rest);
 };
 
 export const pascalArray = (input: Array<string>): Array<string> => {
@@ -66,4 +60,14 @@ export const pascalArray = (input: Array<string>): Array<string> => {
 
 export const pascalKeys = <Input extends AnyObject, Output extends AnyObject>(input: Input): Output => {
   return convertObjectKeysTo<Input, Output>(input, pascalCase);
+};
+
+export { snakeCase };
+
+export const snakeArray = (input: Array<string>): Array<string> => {
+  return convertArrayValuesTo(input, snakeCase);
+};
+
+export const snakeKeys = <Input extends AnyObject, Output extends AnyObject>(input: Input): Output => {
+  return convertObjectKeysTo<Input, Output>(input, snakeCase);
 };
