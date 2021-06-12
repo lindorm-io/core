@@ -11,8 +11,6 @@ describe("random-value.ts", () => {
   test("should return a random number", async () => {
     const result = await getRandomNumber(10);
 
-    expect(result).toStrictEqual(expect.any(String));
-    expect(result.length).toBe(10);
-    expect(parseInt(result)).toStrictEqual(expect.any(Number));
+    expect(result).toStrictEqual(expect.any(Number));
   });
 });

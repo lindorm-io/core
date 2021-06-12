@@ -14,10 +14,12 @@ export const getRandomValue = (length: number): string => {
     .slice(0, length);
 };
 
-export const getRandomNumber = async (length: number): Promise<string> => {
-  const value = [];
-  for (let i = 0; i < length; i++) {
+export const getRandomNumber = async (length: number): Promise<number> => {
+  const value = [await randomNumber(1, 9)];
+
+  for (let i = 1; i < length; i++) {
     value.push(await randomNumber(0, 9));
   }
-  return value.join("");
+
+  return parseInt(value.join(""), 10);
 };
