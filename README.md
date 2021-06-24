@@ -32,10 +32,14 @@ pascalKeys<Input, Output>({ PascalKey: 123, camelKey: true }) // -> { pascal_key
 ```
 
 ### random value
-Quick utilities to get random values.
 ```typescript
 getRandomValue(12) // -> "rOjLkjjLFS2A"
 getRandomNumber(6) // -> 703976
+```
+
+### sort object keys
+```typescript
+sortObjectKeys({ x: 3, a: 1, m: 2 }) // -> { a: 1, m: 2, x: 3 }
 ```
 
 ### strict typing
