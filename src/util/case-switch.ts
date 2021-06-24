@@ -1,7 +1,6 @@
 import { camelCase, snakeCase } from "lodash";
 import { isArrayStrict, isObjectStrict } from "./strict-type";
 
-type AnyObject = Record<string, any>;
 type Callback = (arg: string) => string;
 
 const convertArrayValuesTo = (input: Array<string>, callback: Callback): Array<string> => {
@@ -18,7 +17,7 @@ const convertArrayValuesTo = (input: Array<string>, callback: Callback): Array<s
   return result;
 };
 
-const convertObjectKeysTo = <Input extends AnyObject, Output extends AnyObject>(
+const convertObjectKeysTo = <Input extends Record<string, any>, Output extends Record<string, any>>(
   input: Input,
   callback: Callback,
 ): Output => {
@@ -45,7 +44,9 @@ export const camelArray = (input: Array<string>): Array<string> => {
   return convertArrayValuesTo(input, camelCase);
 };
 
-export const camelKeys = <Input extends AnyObject, Output extends AnyObject>(input: Input): Output => {
+export const camelKeys = <Input extends Record<string, any>, Output extends Record<string, any>>(
+  input: Input,
+): Output => {
   return convertObjectKeysTo<Input, Output>(input, camelCase);
 };
 
@@ -58,7 +59,9 @@ export const pascalArray = (input: Array<string>): Array<string> => {
   return convertArrayValuesTo(input, pascalCase);
 };
 
-export const pascalKeys = <Input extends AnyObject, Output extends AnyObject>(input: Input): Output => {
+export const pascalKeys = <Input extends Record<string, any>, Output extends Record<string, any>>(
+  input: Input,
+): Output => {
   return convertObjectKeysTo<Input, Output>(input, pascalCase);
 };
 
@@ -68,6 +71,8 @@ export const snakeArray = (input: Array<string>): Array<string> => {
   return convertArrayValuesTo(input, snakeCase);
 };
 
-export const snakeKeys = <Input extends AnyObject, Output extends AnyObject>(input: Input): Output => {
+export const snakeKeys = <Input extends Record<string, any>, Output extends Record<string, any>>(
+  input: Input,
+): Output => {
   return convertObjectKeysTo<Input, Output>(input, snakeCase);
 };
